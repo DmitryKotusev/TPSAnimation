@@ -10,6 +10,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
+        private Vector3 m_CamRight;             // The current right direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
@@ -54,20 +55,27 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (m_Cam != null)
             {
                 // calculate camera relative direction to move:
+                // Данная операция зануляет вторую координату вектора направления forward.
+                // По сути мы получаем проекцию вектора forward на плоскость OXZ
                 m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
-                m_Move = v*m_CamForward + h*m_Cam.right;
+                m_CamRight = Vector3.Scale(m_Cam.right, new Vector3(1, 0, 1)).normalized;
+                // Получаем итоговый вектор направления движения
+                m_Move = v * m_CamForward + h * m_CamRight;
             }
             else
             {
                 // we use world-relative directions in the case of no main camera
-                m_Move = v*Vector3.forward + h*Vector3.right;
+                // В случае отсутствия главной камеры мы используем мировые оси
+                m_Move = v * Vector3.forward + h * Vector3.right;
             }
 #if !MOBILE_INPUT
 			// walk speed multiplier
+            // shift уменьшает скорость ходьбы в 2 раза
 	        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
 #endif
 
             // pass all parameters to the character control script
+            // Собственно движение объекта
             m_Character.Move(m_Move, crouch, m_Jump);
             m_Jump = false;
         }
