@@ -21,8 +21,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		Rigidbody m_Rigidbody;
 		Animator m_Animator;
         // На земле ли объект сейчас
+        //!!!!!!!!!!
 		bool m_IsGrounded;
-		float m_OrigGroundCheckDistance;
+        //!!!!!!!!!!
+        float m_OrigGroundCheckDistance;
 		const float k_Half = 0.5f;
         // Угол поворота перса
 		float m_TurnAmount;
@@ -32,10 +34,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		float m_CapsuleHeight;
 		Vector3 m_CapsuleCenter;
 		CapsuleCollider m_Capsule;
-		bool m_Crouching;
+        //!!!!!!!!!!
+        bool m_Crouching;
+        //!!!!!!!!!!
 
 
-		void Start()
+        void Start()
 		{
             // Получение компоненты аниматора
 			m_Animator = GetComponent<Animator>();
