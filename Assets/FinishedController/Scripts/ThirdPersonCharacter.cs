@@ -20,10 +20,6 @@ public class ThirdPersonCharacter : MonoBehaviour
 
     Rigidbody m_Rigidbody;
     Animator m_Animator;
-    // На земле ли объект сейчас
-    //!!!!!!!!!!
-
-    //!!!!!!!!!!
     float m_OrigGroundCheckDistance;
     const float k_Half = 0.5f;
     // Угол поворота перса
@@ -34,9 +30,6 @@ public class ThirdPersonCharacter : MonoBehaviour
     float m_CapsuleHeight;
     Vector3 m_CapsuleCenter;
     CapsuleCollider m_Capsule;
-    //!!!!!!!!!!
-
-    //!!!!!!!!!!
 
 
     public void init()

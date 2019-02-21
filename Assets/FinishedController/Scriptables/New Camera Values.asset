@@ -17,12 +17,12 @@ MonoBehaviour:
   aimSpeed: 25
   yRotateSpeed: 8
   xRotateSpeed: 8
-  minAngle: -35
-  maxAngle: 35
+  minAngle: -80
+  maxAngle: 80
   normalZ: -2
   normalX: 0
-  aimZ: -0.5
-  aimX: 0
+  aimZ: -0.7
+  aimX: 0.4
   normalY: 1.64
   crouchY: 1
   adaptSpeed: 9

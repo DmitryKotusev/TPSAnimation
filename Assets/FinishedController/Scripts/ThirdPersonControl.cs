@@ -41,6 +41,8 @@ public class ThirdPersonControl : MonoBehaviour
         {
             m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
         }
+
+        m_Character.states.isAiming = Input.GetMouseButton(1);
     }
 
 

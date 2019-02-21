@@ -54,8 +54,8 @@ public class CameraControllerScript : MonoBehaviour
 
     void HandlePositions()
     {
-        float targetX = values.normalX; //Стандартные координаты центра вращения камеры по оси X
-        float targetZ = values.normalZ; //Стандартные координаты центра вращения камеры по оси Z
+        float targetX = values.normalX; // Стандартные координаты центра вращения камеры по оси X
+        float targetZ = values.normalZ; // Стандартные координаты центра вращения камеры по оси Z
         float targetY = values.normalY;
         if(states.isCrouching)
         {
@@ -86,7 +86,7 @@ public class CameraControllerScript : MonoBehaviour
     {
         mouseX = Input.GetAxis("Mouse X");
         mouseY = Input.GetAxis("Mouse Y");
-        if(values.turnSmooth > 0)
+        if (values.turnSmooth > 0)
         {
             smoothX = Mathf.SmoothDamp(smoothX, mouseX, ref smoothXVelocity, values.turnSmooth * delta);
             smoothY = Mathf.SmoothDamp(smoothY, mouseY, ref smoothYVelocity, values.turnSmooth * delta);
