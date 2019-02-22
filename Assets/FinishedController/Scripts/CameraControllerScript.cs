@@ -78,7 +78,6 @@ public class CameraControllerScript : MonoBehaviour
         newCameraPosition.z = targetZ;
 
         float t = values.adaptSpeed * delta; // Аргумент линейной интерполяции
-        pivot.localPosition = Vector3.Lerp(pivot.localPosition, newPivotPosition, t);
         cameraTransform.localPosition = Vector3.Lerp(cameraTransform.localPosition, newCameraPosition, t);
     }
 
@@ -98,11 +97,9 @@ public class CameraControllerScript : MonoBehaviour
         }
 
         lookAngle += smoothX * values.yRotateSpeed;
-        Quaternion rotationAngle = Quaternion.Euler(0, lookAngle, 0);
-        mTransform.rotation = rotationAngle;
-
         tiltAngle -= smoothY * values.xRotateSpeed;
         tiltAngle = Mathf.Clamp(tiltAngle, values.minAngle, values.maxAngle);
-        pivot.localRotation = Quaternion.Euler(tiltAngle, 0, 0);
+        Quaternion rotationAngle = Quaternion.Euler(tiltAngle, lookAngle, 0);
+        mTransform.rotation = rotationAngle;
     }
 }
