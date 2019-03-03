@@ -7,8 +7,7 @@ public class CameraCollisionController : MonoBehaviour
     public float minDistance = 1f;
     public float maxDistance = 4f;
     public float smooth = 10f;
-    Vector3 dollyDir;
-    public Vector3 dollyDirAdjusted;
+    public Vector3 dollyDir;
     public float distance;
 
 
@@ -19,11 +18,11 @@ public class CameraCollisionController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Vector3 desiredCameraPosition = transform.TransformPoint(dollyDir * maxDistance);
+        Vector3 desiredCameraPosition = transform.parent.parent.TransformPoint(dollyDir * maxDistance);
         RaycastHit hit;
-        if (Physics.Raycast(transform.parent.position, desiredCameraPosition, out hit))
+        if (Physics.Linecast(transform.parent.position, desiredCameraPosition, out hit))
         {
-            distance = Mathf.Clamp(hit.distance * 0.85f, minDistance, maxDistance);
+            distance = Mathf.Clamp(hit.distance * 0.8f, minDistance, maxDistance);
         }
         else
         {

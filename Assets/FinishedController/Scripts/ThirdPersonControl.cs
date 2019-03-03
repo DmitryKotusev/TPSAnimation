@@ -5,7 +5,7 @@ using UnityStandardAssets.CrossPlatformInput;
 [RequireComponent(typeof(ThirdPersonCharacter))]
 public class ThirdPersonControl : MonoBehaviour
 {
-    public CameraControllerScript cameraController;
+    public CameraFollow cameraFollower;
     private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
     private Transform m_Cam;                  // A reference to the main camera in the scenes transform
     private Vector3 m_CamForward;             // The current forward direction of the camera
@@ -31,7 +31,7 @@ public class ThirdPersonControl : MonoBehaviour
         // get the third person character ( this should never be null due to require component )
         m_Character = GetComponent<ThirdPersonCharacter>();
         m_Character.init();
-        cameraController.Init(transform, m_Character.states);
+        cameraFollower.Init(m_Character.states);
     }
 
 
@@ -43,13 +43,14 @@ public class ThirdPersonControl : MonoBehaviour
         }
 
         m_Character.states.isAiming = Input.GetMouseButton(1);
+        cameraFollower.Tick(Time.deltaTime);
     }
 
 
     // Fixed update is called in sync with physics
     private void FixedUpdate()
     {
-        cameraController.FixedTick(Time.deltaTime);
+        cameraFollower.FixedTick(Time.deltaTime);
         // read inputs
         float h = CrossPlatformInputManager.GetAxis("Horizontal");
         float v = CrossPlatformInputManager.GetAxis("Vertical");
@@ -75,12 +76,28 @@ public class ThirdPersonControl : MonoBehaviour
 #if !MOBILE_INPUT
         // walk speed multiplier
         // shift уменьшает скорость ходьбы в 2 раза
-        if (Input.GetKey(KeyCode.LeftShift)) m_Move *= 0.5f;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            m_Move *= 1f;
+        }
+        else if (Input.GetKey(KeyCode.LeftControl))
+        {
+            m_Move *= 0.5f;
+        }
+        else
+        {
+            m_Move *= 0.8f;
+        }
 #endif
 
         // pass all parameters to the character control script
         // Собственно движение объекта
         m_Character.Move(m_Move, crouch, m_Jump);
         m_Jump = false;
+    }
+
+    private void LateUpdate()
+    {
+        cameraFollower.LateTick(Time.deltaTime);
     }
 }
